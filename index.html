@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which DMT Are You?</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .birthday-banner {
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #c77dff);
+            background-size: 300% 100%;
+            animation: gradientShift 4s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .buzzfeed-header {
+            background: #e32;
+            color: white;
+            padding: 12px 20px;
+            font-size: 26px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .progress-container {
+            background: #ddd;
+            height: 5px;
+            width: 100%;
+        }
+        .progress-bar {
+            height: 5px;
+            background: #e32;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* ── INTRO ── */
+        .intro-screen { text-align: center; }
+        .intro-emoji { font-size: 72px; display: block; margin-bottom: 16px; }
+        .intro-screen h1 {
+            font-size: 38px;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.1;
+            margin-bottom: 14px;
+        }
+        .intro-screen p {
+            font-size: 17px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .start-btn {
+            background: #e32;
+            color: white;
+            border: none;
+            padding: 16px 52px;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .start-btn:hover { background: #c00; transform: scale(1.03); }
+
+        /* ── QUIZ ── */
+        .quiz-screen { display: none; }
+
+        .question-meta {
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 28px;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.3;
+            margin-bottom: 28px;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 520px) {
+            .answers-grid { grid-template-columns: 1fr; }
+            .question-text { font-size: 22px; }
+            .intro-screen h1 { font-size: 28px; }
+        }
+
+        .answer-card {
+            background: white;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 16px 18px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            text-align: left;
+            line-height: 1.4;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        .answer-card:hover {
+            border-color: #e32;
+            background: #fff5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(238,51,34,0.12);
+        }
+        .answer-card.selected {
+            background: #e32 !important;
+            border-color: #e32 !important;
+            color: white !important;
+            transform: scale(0.98);
+        }
+        .answer-card.dimmed {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* ── RESULT ── */
+        .result-screen { display: none; text-align: center; }
+
+        .result-badge {
+            display: inline-block;
+            background: #e32;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 14px;
+            border-radius: 2px;
+            margin-bottom: 24px;
+        }
+        .result-emoji { font-size: 88px; display: block; margin-bottom: 12px; }
+        .result-you-got {
+            font-size: 13px;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .result-name {
+            font-size: 46px;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.05;
+            margin-bottom: 28px;
+        }
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px 32px;
+            text-align: left;
+            border-left: 6px solid #e32;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+        }
+        .result-description {
+            font-size: 18px;
+            color: #444;
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+        .traits-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .trait-chip {
+            background: #f0f0f0;
+            color: #333;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 20px;
+        }
+
+        .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .retake-btn {
+            background: white;
+            color: #e32;
+            border: 3px solid #e32;
+            padding: 13px 36px;
+            font-size: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        .retake-btn:hover { background: #e32; color: white; }
+
+        /* ── ANIMATIONS ── */
+        .fade-in {
+            animation: fadeUp 0.35s ease forwards;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── CONFETTI ── */
+        .confetti-wrap {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 0;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: visible;
+        }
+        .dot {
+            position: absolute;
+            top: -12px;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(800deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="birthday-banner">🎂 &nbsp; Happy Birthday DMT! &nbsp; 🎂</div>
+<div class="buzzfeed-header">BuzzFeed Quiz</div>
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="container">
+
+    <!-- INTRO -->
+    <div class="intro-screen fade-in" id="introScreen">
+        <span class="intro-emoji">🎉</span>
+        <h1>Which DMT Are You?</h1>
+        <p>She's a TikTok queen, a chef, a choreographer, an MC, a mathematician, a fearless driver, a fashionista, and an artist. But which side of DMT matches YOUR energy? Answer 8 questions to find out.</p>
+        <button class="start-btn" onclick="startQuiz()">Let's Go!</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="quiz-screen" id="quizScreen">
+        <div class="question-meta" id="questionMeta">Question 1 of 8</div>
+        <div class="question-text" id="questionText"></div>
+        <div class="answers-grid" id="answersGrid"></div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-screen" id="resultScreen">
+        <div class="result-badge">Your Result</div>
+        <span class="result-emoji" id="resultEmoji"></span>
+        <div class="result-you-got">You got...</div>
+        <div class="result-name" id="resultName"></div>
+        <div class="result-card">
+            <p class="result-description" id="resultDesc"></p>
+            <div class="traits-row" id="resultTraits"></div>
+        </div>
+        <div class="result-actions">
+            <button class="retake-btn" onclick="retake()">Retake Quiz</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<script>
+const AVATARS = [
+    {
+        name: "TikTok DMT",
+        emoji: "📱",
+        description: "You see the world as content — and somehow it always comes out beautiful. Whether it's food or a far-off place, you make people stop scrolling. You find the story in the ordinary and turn it into something worth watching.",
+        traits: ["Creative eye", "Visual storyteller", "World traveler"]
+    },
+    {
+        name: "Choreographer DMT",
+        emoji: "💃",
+        description: "Aries energy, full stop. You don't just feel the music — you translate it into something everyone can feel. Wedding? You've already got the routine locked before anyone even asked. You lead from the front, always.",
+        traits: ["Aries fire", "Natural leader", "Movement is her language"]
+    },
+    {
+        name: "MC DMT",
+        emoji: "🎤",
+        description: "You didn't prepare. You never have to. The words come out structured, smart, and on fire every single time. Rooms quiet down when you speak. You're the person everyone wishes they had booked as host.",
+        traits: ["Intellectual", "Commanding presence", "Effortlessly articulate"]
+    },
+    {
+        name: "Chef DMT",
+        emoji: "👩‍🍳",
+        description: "Love is your ingredient. Whether it's a full Indian feast or a 2am snack nobody asked for, you cook like it matters — because it does. You're a true foodie who can make magic out of any kitchen, any time.",
+        traits: ["Extreme foodie", "Indian food icon", "Cooks with love"]
+    },
+    {
+        name: "MathWorks DMT",
+        emoji: "💻",
+        description: "You're not just building a career — you're building a legacy. AI, GHC, the next big goal... you're always 10 steps ahead and leveling up. Ambitious doesn't even cover it. You're just getting started.",
+        traits: ["Wildly ambitious", "Future-focused", "AI-curious"]
+    },
+    {
+        name: "Driver DMT",
+        emoji: "🚗",
+        description: "Calm, confident, and completely fearless behind the wheel. You've been doing this since forever. Everyone feels safer when you're in the driver's seat — literally and figuratively. People call YOU when it matters.",
+        traits: ["Fearless", "Reliable", "Born to drive"]
+    },
+    {
+        name: "Fashionista DMT",
+        emoji: "✨",
+        description: "Color isn't just a choice for you — it's a language. You dress with intention, passion, and a boldness that makes people stop mid-sentence. Every outfit is a statement, and yours always land.",
+        traits: ["Colorful", "Innovative", "Unapologetically bold"]
+    },
+    {
+        name: "Artist DMT",
+        emoji: "🎨",
+        description: "You slow down where everyone else rushes. You find what's worth drawing in the ordinary and bring it to life on the page. A day at the Harvard Art Museum isn't an outing — it's a spiritual experience.",
+        traits: ["Deeply observant", "Creative soul", "Finds beauty everywhere"]
+    }
+];
+
+const QUESTIONS = [
+    {
+        text: "It's a free Saturday morning. Where is DMT?",
+        options: [
+            { text: "Filming her breakfast for a reel 📸", avatar: 0 },
+            { text: "Running a dance routine in her head", avatar: 1 },
+            { text: "Drafting talking points in her notes app", avatar: 2 },
+            { text: "Making a full Indian breakfast spread from scratch", avatar: 3 },
+            { text: "Deep in an AI course on her laptop", avatar: 4 },
+            { text: "On a long solo drive with no destination", avatar: 5 },
+            { text: "Laying out a colorful fit on the bed", avatar: 6 },
+            { text: "Sketching at a coffee shop", avatar: 7 }
+        ]
+    },
+    {
+        text: "A friend is getting married. What does DMT immediately volunteer for?",
+        options: [
+            { text: "Documents the entire thing for content", avatar: 0 },
+            { text: "\"I got the choreography\" — no discussion", avatar: 1 },
+            { text: "Writes and delivers a speech that makes everyone cry", avatar: 2 },
+            { text: "Takes over the entire menu, period", avatar: 3 },
+            { text: "Builds a color-coded planning spreadsheet", avatar: 4 },
+            { text: "Designated driver for the whole weekend", avatar: 5 },
+            { text: "Designs the bridal party's entire outfit aesthetic", avatar: 6 },
+            { text: "Hand-draws all the signage and decor", avatar: 7 }
+        ]
+    },
+    {
+        text: "It's 2am. What is she actually doing?",
+        options: [
+            { text: "Editing a TikTok she's been sitting on 🎬", avatar: 0 },
+            { text: "Watching a performance video on repeat", avatar: 1 },
+            { text: "Rehearsing a speech nobody even asked for yet", avatar: 2 },
+            { text: "Cooking something that absolutely did not need to be made right now", avatar: 3 },
+            { text: "Reading about machine learning", avatar: 4 },
+            { text: "Night drive, windows down 🌙", avatar: 5 },
+            { text: "Reorganizing her closet by color", avatar: 6 },
+            { text: "Drawing something she randomly thought of", avatar: 7 }
+        ]
+    },
+    {
+        text: "You ask for her honest opinion on something big. She...",
+        options: [
+            { text: "Sends a thoughtful, perfectly lit video response", avatar: 0 },
+            { text: "Somehow relates the whole thing back to movement", avatar: 1 },
+            { text: "Delivers a spontaneous, perfectly structured 3-point answer", avatar: 2 },
+            { text: "Gives the advice, then asks if you've eaten", avatar: 3 },
+            { text: "Presents a logical, data-backed breakdown", avatar: 4 },
+            { text: "Says \"get in the car, we're talking about this\"", avatar: 5 },
+            { text: "Answers while fixing your collar without missing a beat", avatar: 6 },
+            { text: "Draws out a full diagram to explain", avatar: 7 }
+        ]
+    },
+    {
+        text: "You spot her at the party. Where is she?",
+        options: [
+            { text: "Filming something in a corner with perfect lighting", avatar: 0 },
+            { text: "On the dance floor leading a group who didn't ask to be led", avatar: 1 },
+            { text: "In the center of a circle, holding the entire room", avatar: 2 },
+            { text: "At the food table, rating every dish out loud", avatar: 3 },
+            { text: "In a deep conversation about where she'll be in 5 years", avatar: 4 },
+            { text: "Already offering to do the airport run at 6am", avatar: 5 },
+            { text: "Being stopped every 5 minutes about her outfit", avatar: 6 },
+            { text: "Quietly taking in the vibe, mentally sketching it later", avatar: 7 }
+        ]
+    },
+    {
+        text: "What does her camera roll look like?",
+        options: [
+            { text: "Carefully composed food and travel shots", avatar: 0 },
+            { text: "Dance run videos from 12 different angles", avatar: 1 },
+            { text: "Voice memos labeled \"speech ideas\"", avatar: 2 },
+            { text: "Close-ups of every single dish she's ever made", avatar: 3 },
+            { text: "Screenshots of AI articles, career goals, GHC notes", avatar: 4 },
+            { text: "Scenic shots taken from the driver's seat 🛣️", avatar: 5 },
+            { text: "Outfit inspo, color palettes, mirror selfies", avatar: 6 },
+            { text: "Photos from every museum she's ever visited", avatar: 7 }
+        ]
+    },
+    {
+        text: "If she had one completely free day, she would...",
+        options: [
+            { text: "Create content at a new spot she's been scoping 📍", avatar: 0 },
+            { text: "Teach a full dance workshop", avatar: 1 },
+            { text: "Speak at an event or panel", avatar: 2 },
+            { text: "Cook an elaborate meal for everyone she loves", avatar: 3 },
+            { text: "Attend GHC or a major tech conference", avatar: 4 },
+            { text: "Road trip — no plan, just drive", avatar: 5 },
+            { text: "Hunt for a statement piece she's been thinking about", avatar: 6 },
+            { text: "Spend the entire day at the Harvard Art Museum", avatar: 7 }
+        ]
+    },
+    {
+        text: "What is her actual superpower?",
+        options: [
+            { text: "Making ordinary moments look cinematic", avatar: 0 },
+            { text: "Turning any song into a full performance", avatar: 1 },
+            { text: "Walking into any room and commanding it without trying", avatar: 2 },
+            { text: "Making you feel genuinely loved through food", avatar: 3 },
+            { text: "Seeing 10 steps ahead before anyone else does", avatar: 4 },
+            { text: "Getting you there safely, every single time", avatar: 5 },
+            { text: "Making color, pattern, and boldness look completely effortless", avatar: 6 },
+            { text: "Seeing beauty in things most people walk right past", avatar: 7 }
+        ]
+    }
+];
+
+let current = 0;
+let scores = new Array(8).fill(0);
+
+function startQuiz() {
+    document.getElementById('introScreen').style.display = 'none';
+    const qs = document.getElementById('quizScreen');
+    qs.style.display = 'block';
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const q = QUESTIONS[current];
+    document.getElementById('questionMeta').textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+    document.getElementById('questionText').textContent = q.text;
+
+    const grid = document.getElementById('answersGrid');
+    grid.innerHTML = '';
+
+    // Shuffle options
+    const opts = [...q.options].sort(() => Math.random() - 0.5);
+
+    opts.forEach(opt => {
+        const card = document.createElement('div');
+        card.className = 'answer-card';
+        card.textContent = opt.text;
+        card.addEventListener('click', () => pick(card, opt.avatar, grid));
+        grid.appendChild(card);
+    });
+
+    document.getElementById('progressBar').style.width = (current / QUESTIONS.length * 100) + '%';
+
+    const qs = document.getElementById('quizScreen');
+    qs.classList.remove('fade-in');
+    void qs.offsetWidth;
+    qs.classList.add('fade-in');
+}
+
+function pick(card, avatarIdx, grid) {
+    // Lock all cards
+    grid.querySelectorAll('.answer-card').forEach(c => {
+        c.removeEventListener('click', () => {});
+        if (c !== card) c.classList.add('dimmed');
+    });
+    card.classList.add('selected');
+    scores[avatarIdx]++;
+
+    setTimeout(() => {
+        current++;
+        if (current < QUESTIONS.length) {
+            renderQuestion();
+        } else {
+            showResult();
+        }
+    }, 450);
+}
+
+function showResult() {
+    document.getElementById('quizScreen').style.display = 'none';
+    const rs = document.getElementById('resultScreen');
+    rs.style.display = 'block';
+
+    const maxScore = Math.max(...scores);
+    const winner = AVATARS[scores.indexOf(maxScore)];
+
+    document.getElementById('resultEmoji').textContent = winner.emoji;
+    document.getElementById('resultName').textContent = winner.name;
+    document.getElementById('resultDesc').textContent = winner.description;
+    document.getElementById('resultTraits').innerHTML = winner.traits.map(t =>
+        `<span class="trait-chip">${t}</span>`
+    ).join('');
+
+    document.getElementById('progressBar').style.width = '100%';
+
+    rs.classList.remove('fade-in');
+    void rs.offsetWidth;
+    rs.classList.add('fade-in');
+
+    launchConfetti();
+}
+
+function retake() {
+    current = 0;
+    scores = new Array(8).fill(0);
+    document.getElementById('resultScreen').style.display = 'none';
+    document.getElementById('progressBar').style.width = '0%';
+    const qs = document.getElementById('quizScreen');
+    qs.style.display = 'block';
+    renderQuestion();
+}
+
+function launchConfetti() {
+    const wrap = document.getElementById('confettiWrap');
+    wrap.innerHTML = '';
+    const colors = ['#e32', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b6b', '#c77dff', '#ff9f1c', '#06d6a0'];
+
+    for (let i = 0; i < 100; i++) {
+        const el = document.createElement('div');
+        el.className = 'dot';
+        const size = Math.random() * 9 + 5;
+        el.style.cssText = `
+            left: ${Math.random() * 100}vw;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+            animation-duration: ${Math.random() * 2 + 1.5}s;
+            animation-delay: ${Math.random() * 1.2}s;
+        `;
+        wrap.appendChild(el);
+    }
+    setTimeout(() => wrap.innerHTML = '', 5000);
+}
+</script>
+</body>
+</html>

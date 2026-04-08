@@ -61,7 +61,14 @@
 
         /* ── INTRO ── */
         .intro-screen { text-align: center; }
-        .intro-emoji { font-size: 72px; display: block; margin-bottom: 16px; }
+        .hero-image {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        }
         .intro-screen h1 {
             font-size: 38px;
             font-weight: 900;
@@ -266,7 +273,7 @@
 
     <!-- INTRO -->
     <div class="intro-screen fade-in" id="introScreen">
-        <span class="intro-emoji">🎉</span>
+        <img src="dmt.png" alt="Celebrating Dars-Avataram" class="hero-image" />
         <h1>Which DMT Are You?</h1>
         <p>She's a TikTok queen, a chef, a choreographer, an MC, a mathematician, a fearless driver, a fashionista, an artist — and yes, a world-class procrastinator. But which side of DMT matches YOUR energy? Answer 8 questions to find out.</p>
         <button class="start-btn" onclick="startQuiz()">Let's Go!</button>

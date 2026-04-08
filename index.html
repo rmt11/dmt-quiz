@@ -739,7 +739,7 @@ let current = 0;
 let scores = new Array(9).fill(0);
 let userName = '';
 let userPhotoData = null;
-let currentResultId = null; // Firestore doc ID for current user's result
+let currentResultId = localStorage.getItem('dmt_result_id') || null;
 
 // ═══════════════════════════════════════════════════════════════
 //  FIREBASE
@@ -954,13 +954,19 @@ function showResult() {
     showOnly('resultScreen');
     launchConfetti();
 
-    saveResult(winner).then(id => { currentResultId = id; });
+    saveResult(winner).then(id => {
+        if (id) {
+            currentResultId = id;
+            localStorage.setItem('dmt_result_id', id);
+        }
+    });
 }
 
 function retake() {
     current = 0;
     scores = new Array(9).fill(0);
     currentResultId = null;
+    localStorage.removeItem('dmt_result_id');
     userPhotoData = null;
     document.getElementById('photoPreview').style.display = 'none';
     document.getElementById('photoPreview').src = '';
@@ -1033,6 +1039,7 @@ async function deleteResult(docId) {
     try {
         await db.collection('results').doc(docId).delete();
         currentResultId = null;
+        localStorage.removeItem('dmt_result_id');
         retake();
     } catch (e) {
         console.error('Delete error:', e);

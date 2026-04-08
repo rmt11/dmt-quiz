@@ -39,13 +39,26 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+        .wall-nav-btn {
+            font-size: 12px;
+            font-weight: 800;
+            background: white;
+            color: #e32;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .wall-nav-btn:hover { background: #ffe0de; }
 
-        .progress-container {
-            background: #ddd;
-            height: 5px;
-            width: 100%;
-        }
+        .progress-container { background: #ddd; height: 5px; width: 100%; }
         .progress-bar {
             height: 5px;
             background: #e32;
@@ -85,7 +98,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .start-btn {
+        .btn-primary {
             background: #e32;
             color: white;
             border: none;
@@ -97,12 +110,94 @@
             border-radius: 4px;
             letter-spacing: 1px;
             transition: transform 0.1s, background 0.2s;
+            display: inline-block;
         }
-        .start-btn:hover { background: #c00; transform: scale(1.03); }
+        .btn-primary:hover { background: #c00; transform: scale(1.03); }
+        .btn-secondary {
+            background: white;
+            color: #e32;
+            border: 3px solid #e32;
+            padding: 13px 36px;
+            font-size: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .btn-secondary:hover { background: #e32; color: white; }
+        .see-wall-link {
+            display: block;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #aaa;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .see-wall-link:hover { color: #e32; }
+
+        /* ── PROFILE ── */
+        .profile-screen { display: none; text-align: center; }
+        .profile-screen h2 {
+            font-size: 30px;
+            font-weight: 900;
+            color: #111;
+            margin-bottom: 8px;
+        }
+        .profile-screen > p {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 32px;
+        }
+
+        .photo-upload-area {
+            margin: 0 auto 28px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px dashed #ddd;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            background: #f9f9f9;
+            transition: border-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .photo-upload-area:hover { border-color: #e32; background: #fff5f5; }
+        .photo-upload-area.has-photo { border-style: solid; border-color: #e32; }
+        .photo-placeholder { font-size: 28px; color: #bbb; pointer-events: none; }
+        .photo-label { font-size: 11px; color: #bbb; font-weight: 700; margin-top: 4px; pointer-events: none; }
+        #photoPreview {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .name-wrap { margin-bottom: 28px; }
+        .name-wrap input {
+            width: 100%;
+            max-width: 360px;
+            padding: 14px 20px;
+            font-size: 20px;
+            font-weight: 700;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+            color: #111;
+        }
+        .name-wrap input:focus { border-color: #e32; }
+        .name-wrap input::placeholder { color: #ccc; font-weight: 400; }
 
         /* ── QUIZ ── */
         .quiz-screen { display: none; }
-
         .question-meta {
             font-size: 12px;
             font-weight: 700;
@@ -118,18 +213,11 @@
             line-height: 1.3;
             margin-bottom: 28px;
         }
-
         .answers-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
-        @media (max-width: 520px) {
-            .answers-grid { grid-template-columns: 1fr; }
-            .question-text { font-size: 22px; }
-            .intro-screen h1 { font-size: 28px; }
-        }
-
         .answer-card {
             background: white;
             border: 2px solid #e5e5e5;
@@ -142,7 +230,6 @@
             text-align: left;
             line-height: 1.4;
             transition: all 0.15s ease;
-            position: relative;
         }
         .answer-card:hover {
             border-color: #e32;
@@ -156,14 +243,10 @@
             color: white !important;
             transform: scale(0.98);
         }
-        .answer-card.dimmed {
-            opacity: 0.4;
-            pointer-events: none;
-        }
+        .answer-card.dimmed { opacity: 0.4; pointer-events: none; }
 
         /* ── RESULT ── */
         .result-screen { display: none; text-align: center; }
-
         .result-badge {
             display: inline-block;
             background: #e32;
@@ -201,12 +284,7 @@
             margin-bottom: 28px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.07);
         }
-        .result-description {
-            font-size: 18px;
-            color: #444;
-            line-height: 1.75;
-            margin-bottom: 20px;
-        }
+        .result-description { font-size: 18px; color: #444; line-height: 1.75; margin-bottom: 20px; }
         .traits-row { display: flex; flex-wrap: wrap; gap: 8px; }
         .trait-chip {
             background: #f0f0f0;
@@ -216,55 +294,164 @@
             padding: 7px 16px;
             border-radius: 20px;
         }
-
+        .save-status {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+            min-height: 22px;
+        }
+        .save-status.saved { color: #6bcb77; font-weight: 700; }
+        .save-status.error { color: #e32; }
         .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .retake-btn {
-            background: white;
-            color: #e32;
-            border: 3px solid #e32;
-            padding: 13px 36px;
-            font-size: 15px;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 4px;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-        .retake-btn:hover { background: #e32; color: white; }
 
-        /* ── ANIMATIONS ── */
-        .fade-in {
-            animation: fadeUp 0.35s ease forwards;
+        /* ── WALL ── */
+        .wall-screen { display: none; }
+        .wall-header { text-align: center; margin-bottom: 32px; }
+        .wall-header h2 {
+            font-size: 36px;
+            font-weight: 900;
+            color: #111;
+            margin-bottom: 8px;
         }
+        .wall-header p { font-size: 16px; color: #777; }
+
+        .wall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .wall-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            border: 2px solid transparent;
+            transition: transform 0.15s;
+        }
+        .wall-card:hover { transform: translateY(-3px); }
+        .wall-card.mine { border-color: #e32; }
+        .wall-card.mine::after {
+            content: "You!";
+            display: inline-block;
+            background: #e32;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .wall-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            background: #f0f0f0;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            overflow: hidden;
+        }
+        .wall-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .wall-person-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 4px;
+        }
+        .wall-avatar-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e32;
+            margin-bottom: 10px;
+        }
+        .wall-card .traits-row { justify-content: center; }
+        .wall-card .trait-chip { font-size: 11px; padding: 4px 10px; }
+
+        .wall-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #bbb;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .wall-loading {
+            text-align: center;
+            padding: 40px;
+            color: #bbb;
+            font-size: 16px;
+        }
+        .wall-actions { text-align: center; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        /* ── SETUP NOTICE ── */
+        .setup-notice {
+            background: #fff8e1;
+            border: 2px solid #ffd93d;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .setup-notice strong { color: #111; }
+        .setup-notice code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        /* ── SHARED ── */
+        .fade-in { animation: fadeUp 0.35s ease forwards; }
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── CONFETTI ── */
         .confetti-wrap {
-            position: fixed;
-            top: 0; left: 0;
+            position: fixed; top: 0; left: 0;
             width: 100%; height: 0;
-            pointer-events: none;
-            z-index: 9999;
-            overflow: visible;
+            pointer-events: none; z-index: 9999; overflow: visible;
         }
-        .dot {
-            position: absolute;
-            top: -12px;
-            animation: fall linear forwards;
-        }
+        .dot { position: absolute; top: -12px; animation: fall linear forwards; }
         @keyframes fall {
             to { transform: translateY(105vh) rotate(800deg); opacity: 0; }
+        }
+
+        @media (max-width: 520px) {
+            .answers-grid { grid-template-columns: 1fr; }
+            .question-text { font-size: 22px; }
+            .intro-screen h1 { font-size: 28px; }
+            .result-name { font-size: 32px; }
+            .wall-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 360px) {
+            .wall-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="birthday-banner">🎂 &nbsp; Happy Birthday DMT! &nbsp; 🎂</div>
-<div class="buzzfeed-header">BuzzFeed Quiz</div>
+<div class="buzzfeed-header">
+    BuzzFeed Quiz
+    <button class="wall-nav-btn" onclick="goToWall()">🏆 Results Wall</button>
+</div>
 <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
 </div>
@@ -276,7 +463,27 @@
         <img src="dmt.png" alt="Celebrating Dars-Avataram" class="hero-image" />
         <h1>Which DMT Are You?</h1>
         <p>She's a TikTok queen, a chef, a choreographer, an MC, a mathematician, a fearless driver, a fashionista, an artist — and yes, a world-class procrastinator. But which side of DMT matches YOUR energy? Answer 8 questions to find out.</p>
-        <button class="start-btn" onclick="startQuiz()">Let's Go!</button>
+        <button class="btn-primary" onclick="goToProfile()">Let's Go!</button>
+        <span class="see-wall-link" onclick="goToWall()">See everyone's results →</span>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="profile-screen" id="profileScreen">
+        <h2>First — who are you? 👀</h2>
+        <p>Your name and photo will show up on the results wall</p>
+
+        <div class="photo-upload-area" id="photoUploadArea" onclick="document.getElementById('photoInput').click()">
+            <span class="photo-placeholder">📷</span>
+            <span class="photo-label">Add photo</span>
+            <img id="photoPreview" alt="Your photo" />
+        </div>
+        <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoSelect(event)" />
+
+        <div class="name-wrap">
+            <input type="text" id="nameInput" placeholder="Your name" maxlength="30" />
+        </div>
+
+        <button class="btn-primary" onclick="beginQuiz()">Start Quiz →</button>
     </div>
 
     <!-- QUIZ -->
@@ -296,8 +503,27 @@
             <p class="result-description" id="resultDesc"></p>
             <div class="traits-row" id="resultTraits"></div>
         </div>
+        <div class="save-status" id="saveStatus">Saving your result...</div>
         <div class="result-actions">
-            <button class="retake-btn" onclick="retake()">Retake Quiz</button>
+            <button class="btn-primary" onclick="goToWall()">🏆 See Everyone's Results</button>
+            <button class="btn-secondary" onclick="retake()">Retake Quiz</button>
+        </div>
+    </div>
+
+    <!-- WALL -->
+    <div class="wall-screen" id="wallScreen">
+        <div class="wall-header">
+            <div class="result-badge">Dars-Avataram Wall of Fame</div>
+            <h2>The DMT Squad 🏆</h2>
+            <p>Here's which DMT everyone got</p>
+        </div>
+        <div id="firebaseNotice"></div>
+        <div class="wall-grid" id="wallGrid">
+            <div class="wall-loading">Loading results...</div>
+        </div>
+        <div class="wall-actions">
+            <button class="btn-primary" onclick="goToProfile()">Take the Quiz</button>
+            <button class="btn-secondary" onclick="goToIntro()">← Back</button>
         </div>
     </div>
 
@@ -305,59 +531,74 @@
 
 <div class="confetti-wrap" id="confettiWrap"></div>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+
 <script>
+// ═══════════════════════════════════════════════════════════════
+//  FIREBASE CONFIG
+//  1. Go to https://console.firebase.google.com
+//  2. Create a project → Add a web app → copy config here
+//  3. Enable Firestore (Build → Firestore Database → Start in test mode)
+//  4. Enable Storage (Build → Storage → Start in test mode)
+// ═══════════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════════════════════
 const AVATARS = [
     {
-        name: "TikTok DMT",
-        emoji: "📱",
+        name: "TikTok DMT", emoji: "📱",
         description: "You see the world as content — and somehow it always comes out beautiful. Whether it's food or a far-off place, you make people stop scrolling. You find the story in the ordinary and turn it into something worth watching.",
         traits: ["Creative eye", "Visual storyteller", "World traveler"]
     },
     {
-        name: "Choreographer DMT",
-        emoji: "💃",
+        name: "Choreographer DMT", emoji: "💃",
         description: "Aries energy, full stop. You don't just feel the music — you translate it into something everyone can feel. Wedding? You've already got the routine locked before anyone even asked. You lead from the front, always.",
         traits: ["Aries fire", "Natural leader", "Movement is her language"]
     },
     {
-        name: "MC DMT",
-        emoji: "🎤",
+        name: "MC DMT", emoji: "🎤",
         description: "You didn't prepare. You never have to. The words come out structured, smart, and on fire every single time. Rooms quiet down when you speak. You're the person everyone wishes they had booked as host.",
         traits: ["Intellectual", "Commanding presence", "Effortlessly articulate"]
     },
     {
-        name: "Chef DMT",
-        emoji: "👩‍🍳",
+        name: "Chef DMT", emoji: "👩‍🍳",
         description: "Love is your ingredient. Whether it's a full Indian feast or a 2am snack nobody asked for, you cook like it matters — because it does. You're a true foodie who can make magic out of any kitchen, any time.",
         traits: ["Extreme foodie", "Indian food icon", "Cooks with love"]
     },
     {
-        name: "MathWorks DMT",
-        emoji: "💻",
+        name: "MathWorks DMT", emoji: "💻",
         description: "You're not just building a career — you're building a legacy. AI, GHC, the next big goal... you're always 10 steps ahead and leveling up. Ambitious doesn't even cover it. You're just getting started.",
         traits: ["Wildly ambitious", "Future-focused", "AI-curious"]
     },
     {
-        name: "Driver DMT",
-        emoji: "🚗",
+        name: "Driver DMT", emoji: "🚗",
         description: "Calm, confident, and completely fearless behind the wheel. You've been doing this since forever. Everyone feels safer when you're in the driver's seat — literally and figuratively. People call YOU when it matters.",
         traits: ["Fearless", "Reliable", "Born to drive"]
     },
     {
-        name: "Fashionista DMT",
-        emoji: "✨",
+        name: "Fashionista DMT", emoji: "✨",
         description: "Color isn't just a choice for you — it's a language. You dress with intention, passion, and a boldness that makes people stop mid-sentence. Every outfit is a statement, and yours always land.",
         traits: ["Colorful", "Innovative", "Unapologetically bold"]
     },
     {
-        name: "Artist DMT",
-        emoji: "🎨",
+        name: "Artist DMT", emoji: "🎨",
         description: "You slow down where everyone else rushes. You find what's worth drawing in the ordinary and bring it to life on the page. A day at the Harvard Art Museum isn't an outing — it's a spiritual experience.",
         traits: ["Deeply observant", "Creative soul", "Finds beauty everywhere"]
     },
     {
-        name: "Procrastinator DMT",
-        emoji: "🛋️",
+        name: "Procrastinator DMT", emoji: "🛋️",
         description: "The vision is there. The intention is absolutely there. The half-finished painting in the corner is proof. You start things with the energy of someone who will definitely finish — and then life happens. You'll get to it. Probably this weekend. For real this time.",
         traits: ["Full of potential", "Excellent at planning", "The painting is coming"]
     }
@@ -478,16 +719,169 @@ const QUESTIONS = [
     }
 ];
 
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
 let current = 0;
 let scores = new Array(9).fill(0);
+let userName = '';
+let userPhotoBlob = null;
+let currentResultId = null; // Firestore doc ID for current user's result
 
-function startQuiz() {
-    document.getElementById('introScreen').style.display = 'none';
-    const qs = document.getElementById('quizScreen');
-    qs.style.display = 'block';
+// ═══════════════════════════════════════════════════════════════
+//  FIREBASE
+// ═══════════════════════════════════════════════════════════════
+let db = null;
+let storage = null;
+let firebaseReady = false;
+
+function initFirebase() {
+    if (!FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey === 'YOUR_API_KEY') return false;
+    try {
+        const app = firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+        storage = firebase.storage();
+        firebaseReady = true;
+        return true;
+    } catch (e) {
+        console.error('Firebase init error:', e);
+        return false;
+    }
+}
+
+function resizeImage(file, maxPx = 400) {
+    return new Promise(resolve => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            let w = img.width, h = img.height;
+            if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+            else       { w = Math.round(w * maxPx / h); h = maxPx; }
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            URL.revokeObjectURL(url);
+            canvas.toBlob(resolve, 'image/jpeg', 0.82);
+        };
+        img.src = url;
+    });
+}
+
+async function saveResult(avatar) {
+    if (!firebaseReady) return null;
+    const status = document.getElementById('saveStatus');
+
+    try {
+        let photoURL = null;
+        if (userPhotoBlob) {
+            const ref = storage.ref(`photos/${Date.now()}_${userName.replace(/\s+/g, '_')}.jpg`);
+            await ref.put(userPhotoBlob, { contentType: 'image/jpeg' });
+            photoURL = await ref.getDownloadURL();
+        }
+
+        const doc = await db.collection('results').add({
+            name: userName,
+            photoURL: photoURL,
+            avatarName: avatar.name,
+            avatarEmoji: avatar.emoji,
+            avatarDescription: avatar.description,
+            traits: avatar.traits,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        status.textContent = '✓ Result saved!';
+        status.className = 'save-status saved';
+        return doc.id;
+    } catch (e) {
+        console.error('Save error:', e);
+        status.textContent = 'Could not save — check Firebase config.';
+        status.className = 'save-status error';
+        return null;
+    }
+}
+
+async function loadResults() {
+    if (!firebaseReady) return null;
+    try {
+        const snap = await db.collection('results').orderBy('timestamp', 'desc').get();
+        return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch (e) {
+        console.error('Load error:', e);
+        return null;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SCREENS
+// ═══════════════════════════════════════════════════════════════
+function showOnly(id) {
+    ['introScreen','profileScreen','quizScreen','resultScreen','wallScreen'].forEach(s => {
+        document.getElementById(s).style.display = 'none';
+    });
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.classList.remove('fade-in');
+    void el.offsetWidth;
+    el.classList.add('fade-in');
+}
+
+function goToIntro() {
+    document.getElementById('progressBar').style.width = '0%';
+    showOnly('introScreen');
+}
+
+function goToProfile() {
+    document.getElementById('progressBar').style.width = '0%';
+    showOnly('profileScreen');
+    document.getElementById('nameInput').focus();
+}
+
+function goToWall() {
+    document.getElementById('progressBar').style.width = '100%';
+    showOnly('wallScreen');
+    renderWall();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PROFILE
+// ═══════════════════════════════════════════════════════════════
+function handlePhotoSelect(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    resizeImage(file).then(blob => {
+        userPhotoBlob = blob;
+        const url = URL.createObjectURL(blob);
+        const preview = document.getElementById('photoPreview');
+        const area = document.getElementById('photoUploadArea');
+        preview.src = url;
+        preview.style.display = 'block';
+        area.querySelector('.photo-placeholder').style.display = 'none';
+        area.querySelector('.photo-label').style.display = 'none';
+        area.classList.add('has-photo');
+    });
+}
+
+function beginQuiz() {
+    const input = document.getElementById('nameInput');
+    userName = input.value.trim();
+    if (!userName) {
+        input.focus();
+        input.style.borderColor = '#e32';
+        input.placeholder = 'Please enter your name!';
+        setTimeout(() => { input.style.borderColor = ''; input.placeholder = 'Your name'; }, 2000);
+        return;
+    }
+    current = 0;
+    scores = new Array(9).fill(0);
+    currentResultId = null;
+    showOnly('quizScreen');
     renderQuestion();
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  QUIZ
+// ═══════════════════════════════════════════════════════════════
 function renderQuestion() {
     const q = QUESTIONS[current];
     document.getElementById('questionMeta').textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
@@ -495,10 +889,7 @@ function renderQuestion() {
 
     const grid = document.getElementById('answersGrid');
     grid.innerHTML = '';
-
-    // Shuffle options
     const opts = [...q.options].sort(() => Math.random() - 0.5);
-
     opts.forEach(opt => {
         const card = document.createElement('div');
         card.className = 'answer-card';
@@ -516,9 +907,8 @@ function renderQuestion() {
 }
 
 function pick(card, avatarIdx, grid) {
-    // Lock all cards
     grid.querySelectorAll('.answer-card').forEach(c => {
-        c.removeEventListener('click', () => {});
+        c.style.pointerEvents = 'none';
         if (c !== card) c.classList.add('dimmed');
     });
     card.classList.add('selected');
@@ -526,19 +916,15 @@ function pick(card, avatarIdx, grid) {
 
     setTimeout(() => {
         current++;
-        if (current < QUESTIONS.length) {
-            renderQuestion();
-        } else {
-            showResult();
-        }
+        if (current < QUESTIONS.length) renderQuestion();
+        else showResult();
     }, 450);
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  RESULT
+// ═══════════════════════════════════════════════════════════════
 function showResult() {
-    document.getElementById('quizScreen').style.display = 'none';
-    const rs = document.getElementById('resultScreen');
-    rs.style.display = 'block';
-
     const maxScore = Math.max(...scores);
     const winner = AVATARS[scores.indexOf(maxScore)];
 
@@ -549,47 +935,114 @@ function showResult() {
         `<span class="trait-chip">${t}</span>`
     ).join('');
 
+    const status = document.getElementById('saveStatus');
+    if (firebaseReady) {
+        status.textContent = 'Saving your result...';
+        status.className = 'save-status';
+    } else {
+        status.textContent = '';
+    }
+
     document.getElementById('progressBar').style.width = '100%';
-
-    rs.classList.remove('fade-in');
-    void rs.offsetWidth;
-    rs.classList.add('fade-in');
-
+    showOnly('resultScreen');
     launchConfetti();
+
+    saveResult(winner).then(id => { currentResultId = id; });
 }
 
 function retake() {
     current = 0;
     scores = new Array(9).fill(0);
-    document.getElementById('resultScreen').style.display = 'none';
-    document.getElementById('progressBar').style.width = '0%';
-    const qs = document.getElementById('quizScreen');
-    qs.style.display = 'block';
-    renderQuestion();
+    currentResultId = null;
+    userPhotoBlob = null;
+    document.getElementById('photoPreview').style.display = 'none';
+    document.getElementById('photoPreview').src = '';
+    document.getElementById('photoUploadArea').classList.remove('has-photo');
+    document.getElementById('photoUploadArea').querySelector('.photo-placeholder').style.display = '';
+    document.getElementById('photoUploadArea').querySelector('.photo-label').style.display = '';
+    document.getElementById('nameInput').value = '';
+    goToProfile();
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  WALL
+// ═══════════════════════════════════════════════════════════════
+async function renderWall() {
+    const grid = document.getElementById('wallGrid');
+    const notice = document.getElementById('firebaseNotice');
+    grid.innerHTML = '<div class="wall-loading">Loading results...</div>';
+
+    if (!firebaseReady) {
+        notice.innerHTML = `
+            <div class="setup-notice">
+                <strong>⚙️ Firebase not configured yet.</strong><br>
+                To enable the results wall, fill in your Firebase config in the script section of <code>index.html</code>.
+                Create a free project at <strong>console.firebase.google.com</strong>, enable Firestore + Storage in test mode, then paste your config.
+            </div>`;
+        grid.innerHTML = '<div class="wall-empty">Results will appear here once Firebase is set up 🔧</div>';
+        return;
+    }
+
+    notice.innerHTML = '';
+    const results = await loadResults();
+
+    if (!results || results.length === 0) {
+        grid.innerHTML = '<div class="wall-empty">No results yet — be the first! 🎉</div>';
+        return;
+    }
+
+    grid.innerHTML = '';
+    results.forEach(r => {
+        const isMe = r.id === currentResultId;
+        const card = document.createElement('div');
+        card.className = 'wall-card' + (isMe ? ' mine' : '');
+
+        const photoHTML = r.photoURL
+            ? `<img src="${r.photoURL}" alt="${r.name}" />`
+            : r.avatarEmoji;
+
+        card.innerHTML = `
+            <div class="wall-photo">${photoHTML}</div>
+            <div class="wall-person-name">${escapeHTML(r.name)}</div>
+            <div class="wall-avatar-name">${r.avatarEmoji} ${r.avatarName}</div>
+            <div class="traits-row">
+                ${(r.traits || []).map(t => `<span class="trait-chip">${escapeHTML(t)}</span>`).join('')}
+            </div>`;
+        grid.appendChild(card);
+    });
+}
+
+function escapeHTML(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFETTI
+// ═══════════════════════════════════════════════════════════════
 function launchConfetti() {
     const wrap = document.getElementById('confettiWrap');
     wrap.innerHTML = '';
-    const colors = ['#e32', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b6b', '#c77dff', '#ff9f1c', '#06d6a0'];
-
+    const colors = ['#e32','#ffd93d','#6bcb77','#4d96ff','#ff6b6b','#c77dff','#ff9f1c','#06d6a0'];
     for (let i = 0; i < 100; i++) {
         const el = document.createElement('div');
         el.className = 'dot';
         const size = Math.random() * 9 + 5;
         el.style.cssText = `
-            left: ${Math.random() * 100}vw;
-            width: ${size}px;
-            height: ${size}px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-            animation-duration: ${Math.random() * 2 + 1.5}s;
-            animation-delay: ${Math.random() * 1.2}s;
-        `;
+            left:${Math.random()*100}vw;
+            width:${size}px; height:${size}px;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+            border-radius:${Math.random()>.5?'50%':'2px'};
+            animation-duration:${Math.random()*2+1.5}s;
+            animation-delay:${Math.random()*1.2}s;`;
         wrap.appendChild(el);
     }
     setTimeout(() => wrap.innerHTML = '', 5000);
 }
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+initFirebase();
 </script>
 </body>
 </html>

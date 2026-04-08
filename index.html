@@ -268,7 +268,7 @@
     <div class="intro-screen fade-in" id="introScreen">
         <span class="intro-emoji">🎉</span>
         <h1>Which DMT Are You?</h1>
-        <p>She's a TikTok queen, a chef, a choreographer, an MC, a mathematician, a fearless driver, a fashionista, and an artist. But which side of DMT matches YOUR energy? Answer 8 questions to find out.</p>
+        <p>She's a TikTok queen, a chef, a choreographer, an MC, a mathematician, a fearless driver, a fashionista, an artist — and yes, a world-class procrastinator. But which side of DMT matches YOUR energy? Answer 8 questions to find out.</p>
         <button class="start-btn" onclick="startQuiz()">Let's Go!</button>
     </div>
 
@@ -347,6 +347,12 @@ const AVATARS = [
         emoji: "🎨",
         description: "You slow down where everyone else rushes. You find what's worth drawing in the ordinary and bring it to life on the page. A day at the Harvard Art Museum isn't an outing — it's a spiritual experience.",
         traits: ["Deeply observant", "Creative soul", "Finds beauty everywhere"]
+    },
+    {
+        name: "Procrastinator DMT",
+        emoji: "🛋️",
+        description: "The vision is there. The intention is absolutely there. The half-finished painting in the corner is proof. You start things with the energy of someone who will definitely finish — and then life happens. You'll get to it. Probably this weekend. For real this time.",
+        traits: ["Full of potential", "Excellent at planning", "The painting is coming"]
     }
 ];
 
@@ -361,7 +367,8 @@ const QUESTIONS = [
             { text: "Deep in an AI course on her laptop", avatar: 4 },
             { text: "On a long solo drive with no destination", avatar: 5 },
             { text: "Laying out a colorful fit on the bed", avatar: 6 },
-            { text: "Sketching at a coffee shop", avatar: 7 }
+            { text: "Sketching at a coffee shop", avatar: 7 },
+            { text: "Staring at the half-finished painting she started 6 months ago", avatar: 8 }
         ]
     },
     {
@@ -374,7 +381,8 @@ const QUESTIONS = [
             { text: "Builds a color-coded planning spreadsheet", avatar: 4 },
             { text: "Designated driver for the whole weekend", avatar: 5 },
             { text: "Designs the bridal party's entire outfit aesthetic", avatar: 6 },
-            { text: "Hand-draws all the signage and decor", avatar: 7 }
+            { text: "Hand-draws all the signage and decor", avatar: 7 },
+            { text: "Volunteers for everything... finishes half of it by the deadline", avatar: 8 }
         ]
     },
     {
@@ -387,7 +395,8 @@ const QUESTIONS = [
             { text: "Reading about machine learning", avatar: 4 },
             { text: "Night drive, windows down 🌙", avatar: 5 },
             { text: "Reorganizing her closet by color", avatar: 6 },
-            { text: "Drawing something she randomly thought of", avatar: 7 }
+            { text: "Drawing something she randomly thought of", avatar: 7 },
+            { text: "Scrolling Pinterest for painting inspo she'll definitely use... eventually", avatar: 8 }
         ]
     },
     {
@@ -400,7 +409,8 @@ const QUESTIONS = [
             { text: "Presents a logical, data-backed breakdown", avatar: 4 },
             { text: "Says \"get in the car, we're talking about this\"", avatar: 5 },
             { text: "Answers while fixing your collar without missing a beat", avatar: 6 },
-            { text: "Draws out a full diagram to explain", avatar: 7 }
+            { text: "Draws out a full diagram to explain", avatar: 7 },
+            { text: "Says \"I'll get back to you on that\" — and genuinely means it", avatar: 8 }
         ]
     },
     {
@@ -413,7 +423,8 @@ const QUESTIONS = [
             { text: "In a deep conversation about where she'll be in 5 years", avatar: 4 },
             { text: "Already offering to do the airport run at 6am", avatar: 5 },
             { text: "Being stopped every 5 minutes about her outfit", avatar: 6 },
-            { text: "Quietly taking in the vibe, mentally sketching it later", avatar: 7 }
+            { text: "Quietly taking in the vibe, mentally sketching it later", avatar: 7 },
+            { text: "Telling someone about all the projects she's going to finish soon", avatar: 8 }
         ]
     },
     {
@@ -426,7 +437,8 @@ const QUESTIONS = [
             { text: "Screenshots of AI articles, career goals, GHC notes", avatar: 4 },
             { text: "Scenic shots taken from the driver's seat 🛣️", avatar: 5 },
             { text: "Outfit inspo, color palettes, mirror selfies", avatar: 6 },
-            { text: "Photos from every museum she's ever visited", avatar: 7 }
+            { text: "Photos from every museum she's ever visited", avatar: 7 },
+            { text: "Progress photos of the painting — none of which show a finished painting", avatar: 8 }
         ]
     },
     {
@@ -439,7 +451,8 @@ const QUESTIONS = [
             { text: "Attend GHC or a major tech conference", avatar: 4 },
             { text: "Road trip — no plan, just drive", avatar: 5 },
             { text: "Hunt for a statement piece she's been thinking about", avatar: 6 },
-            { text: "Spend the entire day at the Harvard Art Museum", avatar: 7 }
+            { text: "Spend the entire day at the Harvard Art Museum", avatar: 7 },
+            { text: "Plans to finally finish the painting. Watches TV instead.", avatar: 8 }
         ]
     },
     {
@@ -452,13 +465,14 @@ const QUESTIONS = [
             { text: "Seeing 10 steps ahead before anyone else does", avatar: 4 },
             { text: "Getting you there safely, every single time", avatar: 5 },
             { text: "Making color, pattern, and boldness look completely effortless", avatar: 6 },
-            { text: "Seeing beauty in things most people walk right past", avatar: 7 }
+            { text: "Seeing beauty in things most people walk right past", avatar: 7 },
+            { text: "Convincing herself she'll start tomorrow — and fully believing it", avatar: 8 }
         ]
     }
 ];
 
 let current = 0;
-let scores = new Array(8).fill(0);
+let scores = new Array(9).fill(0);
 
 function startQuiz() {
     document.getElementById('introScreen').style.display = 'none';
@@ -539,7 +553,7 @@ function showResult() {
 
 function retake() {
     current = 0;
-    scores = new Array(8).fill(0);
+    scores = new Array(9).fill(0);
     document.getElementById('resultScreen').style.display = 'none';
     document.getElementById('progressBar').style.width = '0%';
     const qs = document.getElementById('quizScreen');

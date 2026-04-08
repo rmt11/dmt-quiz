@@ -379,6 +379,19 @@
         }
         .wall-card .traits-row { justify-content: center; }
         .wall-card .trait-chip { font-size: 11px; padding: 4px 10px; }
+        .delete-btn {
+            margin-top: 12px;
+            background: none;
+            border: 1.5px solid #ddd;
+            color: #aaa;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .delete-btn:hover { border-color: #e32; color: #e32; }
 
         .wall-empty {
             text-align: center;
@@ -1009,9 +1022,21 @@ async function renderWall() {
             <div class="wall-avatar-name">${r.avatarEmoji} ${r.avatarName}</div>
             <div class="traits-row">
                 ${(r.traits || []).map(t => `<span class="trait-chip">${escapeHTML(t)}</span>`).join('')}
-            </div>`;
+            </div>
+            ${isMe ? `<button class="delete-btn" onclick="deleteResult('${r.id}')">↺ Redo mine</button>` : ''}`;
         grid.appendChild(card);
     });
+}
+
+async function deleteResult(docId) {
+    if (!firebaseReady) return;
+    try {
+        await db.collection('results').doc(docId).delete();
+        currentResultId = null;
+        retake();
+    } catch (e) {
+        console.error('Delete error:', e);
+    }
 }
 
 function escapeHTML(str) {

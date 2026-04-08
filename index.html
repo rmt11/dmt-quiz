@@ -1036,6 +1036,8 @@ async function renderWall() {
 
 async function deleteResult(docId) {
     if (!firebaseReady) return;
+    const btn = document.querySelector('.delete-btn');
+    if (btn) btn.textContent = 'Deleting...';
     try {
         await db.collection('results').doc(docId).delete();
         currentResultId = null;
@@ -1043,6 +1045,8 @@ async function deleteResult(docId) {
         retake();
     } catch (e) {
         console.error('Delete error:', e);
+        if (btn) btn.textContent = '↺ Redo mine';
+        alert('Could not delete — check Firestore rules allow delete. Go to Firebase Console → Firestore → Rules and make sure "allow read, write" is set.');
     }
 }
 
